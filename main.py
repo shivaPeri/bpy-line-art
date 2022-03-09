@@ -33,32 +33,16 @@ def createSpline(path, points, name='spline'):
             p.co.x = points[path[i], 0]
             p.co.y = points[path[i], 1]
             p.co.z = points[path[i], 2]
+
+            # TODO: edit radial weights here
+            # bpy.ops.transform.transform(mode='CURVE_SHRINKFATTEN', value=(7.63845, 0, 0, 0), orient_axis='Z', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=False, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
         except:
             pass
 
-
-    # for ind in path:
-    #     # bpy.ops.curve.extrude_move(CURVE_OT_extrude={"mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":points[ind] })
-    #     bpy.ops.curve.extrude_move(CURVE_OT_extrude={"mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":points[ind], "orient_axis_ortho":'X', "orient_type":'GLOBAL', "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
-
-
-    # # make a new curve
-    # crv = bpy.data.curves.new('crv', 'CURVE')
-    # crv.dimensions = '3D'
-
-    # # make a new spline in that curve
-    # spline = crv.splines.new(type='BEZIER')
-    # spline.points.add(len(path)-1)
-
-    # # assign the point coordinates to the spline points
-    # for p, ind in zip(spline.points, path):
-    #     p.co = (points[ind])
-
-    # make a new object with the curve
-    # obj = bpy.data.objects.new(name, crv)
-    # bpy.context.scene.collection.objects.link(obj)
-    # return obj
     bpy.ops.object.mode_set(mode='OBJECT')
+    obj = bpy.context.active_object
+    return obj
 
 #################################### DATA PROCESSING
 
@@ -97,5 +81,6 @@ if __name__ == "__main__":
     curve.data.bevel_mode = 'ROUND'
     curve.data.bevel_depth = 1
     curve.data.use_fill_caps = True
+    
 
     
