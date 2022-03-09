@@ -17,6 +17,38 @@ def clearScene():
 def clearKeyFrames():
     pass
 
+# creates keyframe based on spline mesh data
+def createShapeKey():
+    # sk = obj.shape_key_add('Deform')
+    # sk.interpolation = 'KEY_LINEAR'
+    pass
+
+
+#################################### DATA PROCESSING
+
+# creates n 3d points bounded to a cubic plot size
+# if it exists, only samples points within a sampling mesh's boundary
+# [I] n, integer
+# [O] arr, np.ndarray (n, 3)
+def getPointData(n, length=100, width=100, depth=100):
+    points = np.random.rand(n, 3)
+    points[:,0] = np.interp(points[:,0], [0,1], [-length // 2, length // 2])
+    points[:,1] = np.interp(points[:,1], [0,1], [-width // 2, width // 2])
+    points[:,2] = np.interp(points[:,2], [0,1], [-depth // 2, depth // 2])
+    print(points)
+    return points
+
+# [I] points, np.ndarray (n, 3)
+# [O] path, np.ndarray (n), series of indices by which to define a path
+def findPath(points):
+    return np.arange(len(points))
+
+def BFS(points):
+    pass
+
+def DFS(points):
+    pass
+
 
 #################################### NUMPY -> BPY UTILS
 
@@ -44,30 +76,17 @@ def createSpline(path, points, name='spline'):
     obj = bpy.context.active_object
     return obj
 
-#################################### DATA PROCESSING
 
-# creates n 3d points bounded to a cubic plot size
-# if it exists, only samples points within a sampling mesh's boundary
-# [I] n, integer
-# [O] arr, np.ndarray (n, 3)
-def getPointData(n, length=100, width=100, depth=100):
-    points = np.random.rand(n, 3)
-    points[:,0] = np.interp(points[:,0], [0,1], [-length // 2, length // 2])
-    points[:,1] = np.interp(points[:,1], [0,1], [-width // 2, width // 2])
-    points[:,2] = np.interp(points[:,2], [0,1], [-depth // 2, depth // 2])
-    print(points)
-    return points
+def bevelSpline(curve):
+    curve.data.bevel_mode = 'ROUND'
+    curve.data.bevel_depth = 1
+    curve.data.use_fill_caps = True
 
-# [I] points, np.ndarray (n, 3)
-# [O] path, np.ndarray (n), series of indices by which to define a path
-def findPath(points):
-    return np.arange(len(points))
 
-def BFS(points):
+# transforms the spline according to a vector field
+def transformSpline(spline, path, points, vectorfield, time):
     pass
 
-def DFS(points):
-    pass
 
 if __name__ == "__main__":
     
@@ -78,9 +97,7 @@ if __name__ == "__main__":
     path = findPath(points)
 
     curve = createSpline(path, points, 'test')
-    curve.data.bevel_mode = 'ROUND'
-    curve.data.bevel_depth = 1
-    curve.data.use_fill_caps = True
+    bevelSpline(curve)
     
-
+    # transformSpline()
     
